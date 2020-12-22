@@ -27,6 +27,21 @@ class NumberRangeSummarizerImplementationTest {
 
 	NumberRangeSummarizerImplementation summarizer = new NumberRangeSummarizerImplementation();
 
+	// Test to ensure that function "collect(String input)" only accepts valid input
+	@Test
+	void testCollectCatchesInvalidInput() {
+		String testSpecialCharacter = "1;3,6,7,8,12,13,14,15,21,22,23,24,31";
+		String testLetters = "1,3,6,7,8,12,13,14,15,21,a,23,24,31";
+		String testBlank = "";
+		String testNull = null;
+
+		assertEquals(null, summarizer.collect(testSpecialCharacter));
+		assertEquals(null, summarizer.collect(testLetters));
+		assertEquals(null, summarizer.collect(testBlank));
+		assertEquals(null, summarizer.collect(testNull));
+
+	}
+
 	// Test to ensure that function "collect(String input)" returns a collection of
 	// numbers
 	@Test
@@ -61,10 +76,10 @@ class NumberRangeSummarizerImplementationTest {
 	void testSummarizeCollection() {
 		ArrayList<Integer> testArrayGiven = new ArrayList<>(
 				Arrays.asList(1, 3, 6, 7, 8, 12, 13, 14, 15, 21, 22, 23, 24, 31));
-		
+
 		ArrayList<Integer> testArrayBeginningSummarization = new ArrayList<>(
 				Arrays.asList(1, 2, 3, 4, 6, 7, 8, 12, 13, 14, 15, 21, 22, 23, 24, 31));
-		
+
 		ArrayList<Integer> testArrayEndingSummarization = new ArrayList<>(
 				Arrays.asList(1, 3, 6, 7, 8, 12, 13, 14, 15, 21, 22, 23, 24, 29, 30, 31));
 

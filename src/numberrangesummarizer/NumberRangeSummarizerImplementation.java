@@ -2,34 +2,49 @@ package numberrangesummarizer;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Jason Kelderman
  *
- * Implementation of given Interface to produce a comma delimited list of numbers,
- * grouping the numbers into a range when they are sequential.
+ *         Implementation of given Interface to produce a comma delimited list
+ *         of numbers, grouping the numbers into a range when they are
+ *         sequential.
  *
  *
- * Sample Input: "1,3,6,7,8,12,13,14,15,21,22,23,24,31
- * Result: "1, 3, 6-8, 12-15, 21-24, 31"
+ *         Sample Input: "1,3,6,7,8,12,13,14,15,21,22,23,24,31 Result: "1, 3,
+ *         6-8, 12-15, 21-24, 31"
  *
- * Java 15 used for the code below
+ *         Java 15 used for the code below
  * 
  */
 
 public class NumberRangeSummarizerImplementation implements NumberRangeSummarizer {
-	
+
 	@Override
 	public Collection<Integer> collect(String input) {
-		String[] splitString = input.split(",");
-		ArrayList<Integer> numbers = new ArrayList<>();
+		if (input == null || input.equals("")) {
+			return null;
+		} else {
+			Pattern validInputParameter = Pattern.compile("[^,0-9]");
+			Matcher validInputCheck = validInputParameter.matcher(input);
+			Boolean invalidInput = validInputCheck.find();
 
-		for (String element : splitString) {
-			numbers.add(Integer.parseInt(element));
+			if (invalidInput) {
+				return null;
+			} else {
+				String[] splitString = input.split(",");
+				ArrayList<Integer> numbers = new ArrayList<>();
+
+				for (String element : splitString) {
+					numbers.add(Integer.parseInt(element));
+				}
+				numbers.sort(null);
+
+				return numbers;
+			}
 		}
-		numbers.sort(null);
-
-		return numbers;
 	}
 
 	@Override
